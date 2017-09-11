@@ -52,8 +52,4 @@ texture = ExtResource( 4 )
 
 transform/pos = Vector2( 386.346, 334.652 )
 
-[node name="BasicPlatform" parent="." instance=ExtResource( 2 )]
-
-transform/pos = Vector2( 949.367, 364.572 )
-
 
