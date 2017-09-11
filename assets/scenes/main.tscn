@@ -1,9 +1,10 @@
-[gd_scene load_steps=5 format=1]
+[gd_scene load_steps=6 format=1]
 
 [ext_resource path="res://assets/scripts/main.gd" type="Script" id=1]
 [ext_resource path="res://assets/scenes/enviorment/BasicPlatform.tscn" type="PackedScene" id=2]
 [ext_resource path="res://assets/scripts/database/database.gd" type="Script" id=3]
 [ext_resource path="res://assets/scenes/charachters/player.tscn" type="PackedScene" id=4]
+[ext_resource path="res://assets/sprites/enviorment/desert.tex" type="Texture" id=5]
 
 [node name="Node2D" type="Node2D"]
 
@@ -16,10 +17,16 @@ script/script = ExtResource( 3 )
 
 [node name="KinematicBody2D" parent="." instance=ExtResource( 4 )]
 
-transform/pos = Vector2( 900.473, 275.926 )
+transform/pos = Vector2( 901.581, 237.145 )
 
 [node name="BasicPlatform" parent="." instance=ExtResource( 2 )]
 
 transform/pos = Vector2( 949.367, 364.572 )
+
+[node name="Background" type="Sprite" parent="."]
+
+transform/pos = Vector2( 959.847, 540.339 )
+z/z = -1
+texture = ExtResource( 5 )
 
 
