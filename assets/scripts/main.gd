@@ -3,14 +3,21 @@ extends Node2D
 export (PackedScene) var platform = null
 var spawnTime = 0;
 const spawncount = 1
+var score = 0
+
 
 func _ready():
 	randomize()
-
+	get_node("StreamPlayer").play("hard")
 	platformSpawner()
 	set_fixed_process(true)
+	
+	
 func _fixed_process(delta):
-	if (spawnTime >= 1):
+	score += 0.2
+
+	get_node("CanvasLayer/Label").set_text(str(round(score)))
+	if (spawnTime >= 3):
 		 platformSpawner()
 		 spawnTime = 0
 	if (Input.is_action_pressed("exit")):
