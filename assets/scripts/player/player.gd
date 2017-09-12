@@ -13,9 +13,13 @@ var walking = false
 var jumping = false 
 var timesincelastjump = 0
 
+var direction = false 
+
 onready var jumpcast = get_node("jumpcast")
-onready var grouncheck = get_node("groundcheck")
+onready var groundcheck = get_node("groundcheck")
 onready var anim = get_node("animation")
+onready var rightRaycast = get_node("Right")
+onready var leftRaycast = get_node("Left")
 
 func _fixed_process(delta):
 	movement(delta)
@@ -27,12 +31,13 @@ func movement(var delta):
 	timesincelastjump += delta
 	if (Input.is_action_pressed("ui_left")):
 		velocity.x = -WALK_SPEED
-
-		anim.set_flip_h(true)
+		direction = true 
+		anim.set_flip_h(direction)
 		walking = true
 	elif (Input.is_action_pressed("ui_right")):
 		velocity.x =  WALK_SPEED
-		anim.set_flip_h(false)
+		direction = false
+		anim.set_flip_h(direction)
 		walking = true
 	else:
 		walking = false
@@ -44,13 +49,20 @@ func movement(var delta):
 		jumping = true
 		anim.play("jump")
 		anim.set_frame(0)
-#		if (jumps == 0):
-#			if (grouncheck.get_collider() != null):
-		#		var lenght = grouncheck.get_collider().get_node("Sprite").get_texture().get_size().x / 2
-		#		var startpos = grouncheck.get_collider().get_node("Sprite").get_global_pos().x - lenght / 2
-		#		var collisionpoint = grouncheck.get_collision_point().x
-		#		var percent = ((collisionpoint - startpos)/lenght) * 100
-		#		print(percent)
+		if (jumps == 0):
+			if (groundcheck.get_collider() != null):
+				var lenght = groundcheck.get_collider().get_node("Sprite").get_texture().get_size().x * groundcheck.get_collider().get_scale().x
+				var startpos = groundcheck.get_collider().get_global_pos().x - lenght / 2	
+				var collisionpoint 
+				if (get_global_pos().x < groundcheck.get_collider().get_global_pos().x):
+					
+					collisionpoint = rightRaycast.get_collision_point().x
+					#print (collisionpoint)
+				else:
+					collisionpoint = leftRaycast.get_collision_point().x
+				var percent = ((collisionpoint - startpos)/lenght) * 100
+				percent = clamp(percent, 0, 100)
+				print(percent)
 		jumps += 1
 		velocity.y = -jump_strenght
 	if (walking && !jumping):
@@ -58,8 +70,6 @@ func movement(var delta):
 	if (!walking && !jumping):
 		anim.play("idle")
 	var motion = velocity * delta
-	
-	
 	
 	move(motion)
 	if (is_colliding()):
@@ -78,4 +88,6 @@ func movement(var delta):
 		
 func _ready():
 	jumpcast.add_exception(self)
+	rightRaycast.add_exception(self)
+	leftRaycast.add_exception(self)
 	set_fixed_process(true)
