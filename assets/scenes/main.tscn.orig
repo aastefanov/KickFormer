@@ -36,6 +36,8 @@ transform/pos = Vector2( 949.367, 363.212 )
 
 [node name="Background" type="Sprite" parent="."]
 
+<<<<<<< HEAD
+transform/pos = Vector2( 959.847, 540.339 )
 z/z = -1
 texture = ExtResource( 5 )
 __meta__ = {
@@ -84,4 +86,6 @@ default/reverb_room = 2
 default/reverb_send = 0.0
 default/chorus_send = 0.0
 
+=======
+>>>>>>> master
 
