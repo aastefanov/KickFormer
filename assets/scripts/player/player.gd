@@ -20,6 +20,9 @@ onready var groundcheck = get_node("groundcheck")
 onready var anim = get_node("animation")
 onready var rightRaycast = get_node("Right")
 onready var leftRaycast = get_node("Left")
+onready var database = get_parent().get_node("Database")
+
+
 
 func _fixed_process(delta):
 	movement(delta)
@@ -61,8 +64,8 @@ func movement(var delta):
 				else:
 					collisionpoint = leftRaycast.get_collision_point().x
 				var percent = ((collisionpoint - startpos)/lenght) * 100
-				percent = clamp(percent, 0, 100)
-				print(percent)
+				percent = clamp(percent, 1, 100)
+				modify_jump_value(percent)
 		jumps += 1
 		velocity.y = -jump_strenght
 	if (walking && !jumping):
@@ -80,12 +83,16 @@ func movement(var delta):
 		jumping = false
 		var n = get_collision_normal()
 		motion = n.slide(motion)
-		if (Input.is_action_pressed("ui_select")):
-			print(motion)
 		velocity = n.slide(velocity)
 		
 		move(motion)
-		
+func modify_jump_value(var percent):
+	var jump_start_id = database.get_stat_by_name("jump_start")
+	var player_id = get_parent().player_id 
+	var jump_start_row = database.get_player_stat(jump_start_id, player_id);
+	var insert_value = (jump_start_row["value"] * jump_start_row["weigth"] + percent) / (jump_start_row["weigth"] + 1)
+	database.set_value_to_stat(jump_start_id, insert_value, player_id)
+	#print(database.get_player_stat(jump_start_id, player_id))
 func _ready():
 	jumpcast.add_exception(self)
 	rightRaycast.add_exception(self)

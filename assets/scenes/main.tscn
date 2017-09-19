@@ -30,15 +30,46 @@ script/script = ExtResource( 3 )
 
 transform/pos = Vector2( 901.581, 237.145 )
 
-[node name="BasicPlatform" parent="." instance=ExtResource( 2 )]
+[node name="BasicPlatform7" parent="." instance=ExtResource( 2 )]
 
-transform/pos = Vector2( 949.367, 363.212 )
+transform/pos = Vector2( 1544.39, 1021.79 )
+
+[node name="BasicPlatform8" parent="." instance=ExtResource( 2 )]
+
+transform/pos = Vector2( 1794.17, 1021.77 )
+
+[node name="BasicPlatform9" parent="." instance=ExtResource( 2 )]
+
+transform/pos = Vector2( 1294.54, 1021.6 )
+
+[node name="BasicPlatform10" parent="." instance=ExtResource( 2 )]
+
+transform/pos = Vector2( 978.776, 815.166 )
+
+[node name="BasicPlatform11" parent="." instance=ExtResource( 2 )]
+
+transform/pos = Vector2( 795.036, 1021.6 )
+
+[node name="BasicPlatform12" parent="." instance=ExtResource( 2 )]
+
+transform/pos = Vector2( 545.153, 1021.32 )
+
+[node name="BasicPlatform13" parent="." instance=ExtResource( 2 )]
+
+transform/pos = Vector2( 295.044, 1021.32 )
+
+[node name="BasicPlatform14" parent="." instance=ExtResource( 2 )]
+
+transform/pos = Vector2( 45.3028, 1021.48 )
 
 [node name="Background" type="Sprite" parent="."]
 
 transform/pos = Vector2( 960.018, 540.035 )
 z/z = -1
 texture = ExtResource( 5 )
+__meta__ = {
+"_edit_lock_": true
+}
 
 [node name="CanvasLayer" type="CanvasLayer" parent="."]
 

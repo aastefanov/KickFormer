@@ -1,19 +1,19 @@
 [gd_scene load_steps=4 format=1]
 
 [ext_resource path="res://assets/scripts/enviorment/BasicPlatform.gd" type="Script" id=1]
-[ext_resource path="res://assets/sprites/enviorment/platforms/platform1.png" type="Texture" id=2]
+[ext_resource path="res://assets/sprites/enviorment/platforms/platform0_test.png" type="Texture" id=2]
 
 [sub_resource type="RectangleShape2D" id=1]
 
 custom_solver_bias = 0.0
-extents = Vector2( 248.481, 59.0998 )
+extents = Vector2( 250.223, 60.5029 )
 
 [node name="BasicPlatform" type="StaticBody2D"]
 
 transform/scale = Vector2( 0.5, 0.5 )
 input/pickable = false
 shapes/0/shape = SubResource( 1 )
-shapes/0/transform = Matrix32( 1, 0, 0, 1.46141, 0, 28.6538 )
+shapes/0/transform = Matrix32( 1, 0, 0, 1.46141, 2.85391, 27.7025 )
 shapes/0/trigger = false
 collision/layers = 1
 collision/mask = 1
@@ -33,7 +33,8 @@ rect = Rect2( -10, -10, 20, 20 )
 
 [node name="CollisionShape2D" type="CollisionShape2D" parent="."]
 
-transform/pos = Vector2( 0, 28.6538 )
+visibility/visible = false
+transform/pos = Vector2( 2.85391, 27.7025 )
 transform/scale = Vector2( 1, 1.46141 )
 shape = SubResource( 1 )
 trigger = false

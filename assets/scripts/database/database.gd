@@ -78,11 +78,11 @@ func get_player_stat(stat_id, player_id):
 	return null
 
 func set_value_to_stat(stat_id, value, player_id):
-	db.query("UPDATE player_stats SET value='" + str(value) + "' WHERE player_id='"+str(player_id)+"' AND stat_id='"+str(stat_id)+"';")
+	db.query("UPDATE player_stats SET value='" + str(value) + "', weigth = weigth + 1 WHERE player_id='"+str(player_id)+"' AND stat_id='"+str(stat_id)+"';")
 
-func add_value_to_stat(stat_id, value, player_id):
-	db.query("UPDATE player_stats SET value = value + '" + str(value) + "', weigth = weigth + 1 WHERE player_id='"+str(player_id)+"' AND stat_id='"+str(stat_id)+"';")
-	print(db.get_errormsg())
+#func add_value_to_stat(stat_id, value, player_id):
+#	db.query("UPDATE player_stats SET value = value + '" + str(value) + "', weigth = weigth + 1 WHERE player_id='"+str(player_id)+"' AND stat_id='"+str(stat_id)+"';")
+#	print(db.get_errormsg())
 
 func set_stat_goal(stat_id, goal, player_id):
 	db.query("UPDATE player_stats SET goal='"+str(goal)+"' WHERE stat_id='"+str(stat_id)+"' AND player_id='"+str(player_id)+"';")
