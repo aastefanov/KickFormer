@@ -76,8 +76,6 @@ func movement(var delta):
 	
 	move(motion)
 	if (is_colliding()):
-		if (!walking):
-			translate(Vector2(-get_collider().get_speed() * delta, 0))
 		if (jumpcast.is_colliding()):	
 			jumps = 0
 		jumping = false
@@ -86,6 +84,7 @@ func movement(var delta):
 		velocity = n.slide(velocity)
 		
 		move(motion)
+
 func modify_jump_value(var percent):
 	var jump_start_id = database.get_stat_by_name("jump_start")
 	var player_id = get_parent().player_id 
@@ -93,6 +92,8 @@ func modify_jump_value(var percent):
 	var insert_value = (jump_start_row["value"] * jump_start_row["weigth"] + percent) / (jump_start_row["weigth"] + 1)
 	database.set_value_to_stat(jump_start_id, insert_value, player_id)
 	#print(database.get_player_stat(jump_start_id, player_id))
+
+
 func _ready():
 	jumpcast.add_exception(self)
 	rightRaycast.add_exception(self)

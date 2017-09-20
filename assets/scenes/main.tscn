@@ -1,12 +1,13 @@
-[gd_scene load_steps=9 format=1]
+[gd_scene load_steps=11 format=1]
 
 [ext_resource path="res://assets/scripts/main.gd" type="Script" id=1]
 [ext_resource path="res://assets/scenes/enviorment/BasicPlatform.tscn" type="PackedScene" id=2]
 [ext_resource path="res://assets/scripts/database/database.gd" type="Script" id=3]
-[ext_resource path="res://assets/scenes/charachters/player.tscn" type="PackedScene" id=4]
-[ext_resource path="res://assets/sprites/enviorment/desert.tex" type="Texture" id=5]
-[ext_resource path="res://assets/fonts/60px.fnt" type="BitmapFont" id=6]
-[ext_resource path="res://assets/music/soundtrack/KickFormer Soundtrack - Hard.smp" type="Sample" id=7]
+[ext_resource path="res://assets/sprites/enviorment/desert.tex" type="Texture" id=4]
+[ext_resource path="res://assets/scenes/charachters/player.tscn" type="PackedScene" id=5]
+[ext_resource path="res://assets/music/soundtrack/KickFormer Soundtrack - Hard.smp" type="Sample" id=6]
+[ext_resource path="res://assets/scripts/enviorment/cameracontroller.gd" type="Script" id=7]
+[ext_resource path="res://assets/scenes/enviorment/basiclevel.tscn" type="PackedScene" id=8]
 
 [sub_resource type="SampleLibrary" id=1]
 
@@ -14,10 +15,15 @@ samples/hard = {
 "db": 0.0,
 "pitch": 1.0,
 "priority": 0,
-"sample": ExtResource( 7 )
+"sample": ExtResource( 6 )
 }
 
-[node name="Node2D" type="Node2D"]
+[sub_resource type="RectangleShape2D" id=2]
+
+custom_solver_bias = 0.0
+extents = Vector2( 50.5396, 557.376 )
+
+[node name="game" type="Node2D"]
 
 script/script = ExtResource( 1 )
 platform = ExtResource( 2 )
@@ -26,77 +32,40 @@ platform = ExtResource( 2 )
 
 script/script = ExtResource( 3 )
 
-[node name="player" parent="." instance=ExtResource( 4 )]
+[node name="ParallaxLayer" type="ParallaxLayer" parent="."]
 
-transform/pos = Vector2( 901.581, 237.145 )
+transform/pos = Vector2( 960.018, 540.035 )
+motion/scale = Vector2( 1, 1 )
+motion/offset = Vector2( 0, 0 )
+motion/mirroring = Vector2( 1920, 0 )
 
-[node name="BasicPlatform7" parent="." instance=ExtResource( 2 )]
+[node name="ParallaxBackground" type="ParallaxBackground" parent="ParallaxLayer"]
 
-transform/pos = Vector2( 1544.39, 1021.79 )
+layer = -1
+offset = Vector2( 0, 0 )
+rotation = 0.0
+scale = Vector2( 1, 1 )
+scroll/offset = Vector2( 0, 0 )
+scroll/base_offset = Vector2( 0, 0 )
+scroll/base_scale = Vector2( 1, 1 )
+scroll/limit_begin = Vector2( 0, 0 )
+scroll/limit_end = Vector2( 0, 0 )
+scroll/ignore_camera_zoom = false
 
-[node name="BasicPlatform8" parent="." instance=ExtResource( 2 )]
-
-transform/pos = Vector2( 1794.17, 1021.77 )
-
-[node name="BasicPlatform9" parent="." instance=ExtResource( 2 )]
-
-transform/pos = Vector2( 1294.54, 1021.6 )
-
-[node name="BasicPlatform10" parent="." instance=ExtResource( 2 )]
-
-transform/pos = Vector2( 978.776, 815.166 )
-
-[node name="BasicPlatform11" parent="." instance=ExtResource( 2 )]
-
-transform/pos = Vector2( 795.036, 1021.6 )
-
-[node name="BasicPlatform12" parent="." instance=ExtResource( 2 )]
-
-transform/pos = Vector2( 545.153, 1021.32 )
-
-[node name="BasicPlatform13" parent="." instance=ExtResource( 2 )]
-
-transform/pos = Vector2( 295.044, 1021.32 )
-
-[node name="BasicPlatform14" parent="." instance=ExtResource( 2 )]
-
-transform/pos = Vector2( 45.3028, 1021.48 )
-
-[node name="Background" type="Sprite" parent="."]
+[node name="mainBackground" type="Sprite" parent="ParallaxLayer/ParallaxBackground"]
 
 transform/pos = Vector2( 960.018, 540.035 )
 z/z = -1
-texture = ExtResource( 5 )
+texture = ExtResource( 4 )
 __meta__ = {
 "_edit_lock_": true
 }
 
-[node name="CanvasLayer" type="CanvasLayer" parent="."]
+[node name="player" parent="." instance=ExtResource( 5 )]
 
-layer = 1
-offset = Vector2( 0, 0 )
-rotation = 0.0
-scale = Vector2( 1, 1 )
+transform/pos = Vector2( 901.581, 237.145 )
 
-[node name="Label" type="Label" parent="CanvasLayer"]
-
-focus/ignore_mouse = true
-focus/stop_mouse = true
-size_flags/horizontal = 2
-size_flags/vertical = 0
-margin/left = 30.0
-margin/top = 23.0
-margin/right = 118.0
-margin/bottom = 83.0
-custom_fonts/font = ExtResource( 6 )
-custom_colors/font_color = Color( 0.375, 0.18457, 0.0703125, 1 )
-custom_colors/font_color_shadow = Color( 0.351563, 0.138702, 0.138702, 1 )
-text = "Text"
-percent_visible = 1.0
-lines_skipped = 0
-max_lines_visible = -1
-
-[node name="StreamPlayer" type="SamplePlayer" parent="."]
+[node name="music" type="SamplePlayer" parent="."]
 
 config/polyphony = 1
 config/samples = SubResource( 1 )
@@ -112,5 +81,59 @@ default/filter/gain = 1.0
 default/reverb_room = 2
 default/reverb_send = 0.0
 default/chorus_send = 0.0
+
+[node name="mainCamera" type="Camera2D" parent="."]
+
+anchor_mode = 0
+rotating = false
+current = true
+zoom = Vector2( 1, 1 )
+limit/left = -10000000
+limit/top = -10000000
+limit/right = 10000000
+limit/bottom = 10000000
+drag_margin/h_enabled = true
+drag_margin/v_enabled = true
+smoothing/enable = true
+smoothing/speed = 5.0
+drag_margin/left = 0.2
+drag_margin/top = 0.2
+drag_margin/right = 0.2
+drag_margin/bottom = 0.2
+script/script = ExtResource( 7 )
+
+[node name="stages" type="Node2D" parent="."]
+
+editor/display_folded = true
+
+[node name="level0" parent="stages" instance=ExtResource( 8 )]
+
+[node name="level1" parent="stages" instance=ExtResource( 8 )]
+
+transform/pos = Vector2( 1920, 0 )
+
+[node name="level2" parent="stages" instance=ExtResource( 8 )]
+
+transform/pos = Vector2( 3840, 0 )
+
+[node name="finishPoint" type="Area2D" parent="."]
+
+input/pickable = true
+shapes/0/shape = SubResource( 2 )
+shapes/0/transform = Matrix32( 1, 0, 0, 1, 1966.76, 552.716 )
+shapes/0/trigger = true
+gravity_vec = Vector2( 0, 1 )
+gravity = 98.0
+linear_damp = 0.1
+angular_damp = 1.0
+
+[node name="CollisionShape2D" type="CollisionShape2D" parent="finishPoint"]
+
+transform/pos = Vector2( 1966.76, 552.716 )
+shape = SubResource( 2 )
+trigger = true
+_update_shape_index = 0
+
+[connection signal="body_enter" from="finishPoint" to="mainCamera" method="_on_finishPoint_body_enter"]
 
 

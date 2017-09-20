@@ -1,0 +1,16 @@
+[gd_scene load_steps=3 format=1]
+
+[ext_resource path="res://assets/scripts/enviorment/basicLevel.gd" type="Script" id=1]
+[ext_resource path="res://assets/scenes/enviorment/ground.tscn" type="PackedScene" id=2]
+
+[node name="level" type="Node2D"]
+
+script/script = ExtResource( 1 )
+
+[node name="Position2D" type="Position2D" parent="."]
+
+[node name="ground" parent="." instance=ExtResource( 2 )]
+
+transform/pos = Vector2( 960, 1105 )
+
+

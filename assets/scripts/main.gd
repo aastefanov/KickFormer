@@ -22,7 +22,7 @@ func _ready():
 func _fixed_process(delta):
 	score += 0.2
 
-	get_node("CanvasLayer/Label").set_text(str(round(score)))
+	#get_node("CanvasLayer/Label").set_text(str(round(score)))
 	if (spawnTime >= 2):
 		 #platformSpawner()
 		 spawnTime = 0
@@ -31,17 +31,17 @@ func _fixed_process(delta):
 	spawnTime += delta;
 
 
-func spawn_platform(var pos, var deviation):
-	var spawnedPlatform = platform.instance()
-	spawnedPlatform.set_pos(pos)
-	#spawnedPlatform.speed = spawnedPlatform.speed * deviation
-	add_child(spawnedPlatform)
-	
-func platformSpawner():
-	var spawnpos = Vector2(get_viewport().get_rect().size.x,rand_range(get_viewport().get_rect().size.y / 3, get_viewport().get_rect().size.y - (get_viewport().get_rect().size.y / 3)))
-	var stat_id = database.get_stat_by_name("jump_start")
-	var statvalue = database.get_player_stat(stat_id, player_id)
-	var deviation = (100 + (statvalue["value"] - statvalue["goal"])) / 100
-	spawn_platform(spawnpos,  deviation )
-	
+#func spawn_platform(var pos, var deviation):
+#	var spawnedPlatform = platform.instance()
+#	spawnedPlatform.set_pos(pos)
+#	#spawnedPlatform.speed = spawnedPlatform.speed * deviation
+#	add_child(spawnedPlatform)
+#	
+#func platformSpawner():
+#	var spawnpos = Vector2(get_viewport().get_rect().size.x,rand_range(get_viewport().get_rect().size.y / 3, get_viewport().get_rect().size.y - (get_viewport().get_rect().size.y / 3)))
+#	var stat_id = database.get_stat_by_name("jump_start")
+#	var statvalue = database.get_player_stat(stat_id, player_id)
+#	var deviation = (100 + (statvalue["value"] - statvalue["goal"])) / 100
+#	spawn_platform(spawnpos,  deviation )
+#	
 	
