@@ -4,7 +4,7 @@ const GRAVITY = 1000.0
 const WALK_SPEED = 320
 const jump_strenght = 650
 const JUMP_DELAY = 0.35
-const SHOOT_DELAY = 0.1
+const SHOOT_DELAY = 0.2
 
 var velocity = Vector2()
 var jumps = 0

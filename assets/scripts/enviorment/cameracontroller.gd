@@ -10,6 +10,7 @@ func _ready():
 
 func _on_finishPoint_body_enter( body ):
 	if(body.is_in_group("player")):
+		get_parent().generateNextLevel()
 		time = 0
 		get_node("/root/globals").currentLevel += 1
 		goal = get_parent().get_node("stages/level" + str(get_node("/root/globals").currentLevel) + "/Position2D").get_global_pos().x
