@@ -23,37 +23,37 @@
 [sub_resource type="ConvexPolygonShape2D" id=1]
 
 custom_solver_bias = 0.0
-points = Vector2Array( -3.85244, 61.7128, -20.5004, 61.9507, -22.0269, 45.2976, -16.3052, 31.6536, 16.6007, 24.3739, 25.1625, 45.5406, 24.6869, 55.0537 )
+points = Vector2Array( -20.977, -40.0776, -21.8511, -48.644, -21.4966, -57.1392, -11.4638, -57.6923, 11.863, -57.6923, 22.9972, -49.0383, 22.4276, -40.2098, 22.1428, -36.2227 )
 
 [sub_resource type="ConvexPolygonShape2D" id=2]
 
 custom_solver_bias = 0.0
-points = Vector2Array( 24.6869, 55.0537, 22.3086, 61.9507, -3.85244, 61.7128 )
+points = Vector2Array( 16.6007, 24.3739, 22.9048, 45.4807, 22.7624, 54.7364, -3.85244, 61.7128, -17.1083, 61.8561, -19.1018, 45.0535, -16.3052, 31.6536 )
 
 [sub_resource type="ConvexPolygonShape2D" id=3]
 
 custom_solver_bias = 0.0
-points = Vector2Array( 16.6007, 24.3739, -16.3052, 31.6536, -14.5447, 5.6861, 16.1251, -0.360161 )
+points = Vector2Array( 11.863, -57.6923, 21.9859, -57.6923, 22.9972, -49.0383 )
 
 [sub_resource type="ConvexPolygonShape2D" id=4]
 
 custom_solver_bias = 0.0
-points = Vector2Array( 24.9247, -35.5586, 25.1625, -22.9538, 16.1251, -0.360161, -14.5447, 5.6861, -21.1466, -18.0808, -26.8683, -39.207, -26.4282, -48.0095, -21.5868, -54.6114, -11.4638, -57.6923 )
+points = Vector2Array( 22.7624, 54.7364, 21.1961, 61.7137, -3.85244, 61.7128 )
 
 [sub_resource type="ConvexPolygonShape2D" id=5]
 
 custom_solver_bias = 0.0
-points = Vector2Array( 29.028, -48.0095, 28.1477, -38.3267, 24.9247, -35.5586, -11.4638, -57.6923, -4.86189, -64.2942, 11.863, -57.6923 )
+points = Vector2Array( 16.6007, 24.3739, -16.3052, 31.6536, -14.5447, 5.6861, 16.1251, -0.360161 )
 
 [sub_resource type="ConvexPolygonShape2D" id=6]
 
 custom_solver_bias = 0.0
-points = Vector2Array( -4.86189, -64.2942, 8.34193, -63.8541, 11.863, -57.6923 )
+points = Vector2Array( 22.57, -22.6952, 16.1251, -0.360161, -14.5447, 5.6861, -18.8791, -18.3994, -20.977, -40.0776, 22.1428, -36.2227 )
 
 [sub_resource type="ConvexPolygonShape2D" id=7]
 
 custom_solver_bias = 0.0
-points = Vector2Array( 29.028, -48.0095, 11.863, -57.6923, 21.9859, -57.6923 )
+points = Vector2Array( 11.863, -57.6923, -11.4638, -57.6923, -4.86189, -64.2942, 8.34193, -63.8541 )
 
 [sub_resource type="SpriteFrames" id=8]
 
@@ -104,13 +104,26 @@ collision/layers = 2
 collision/mask = 1
 collision/margin = 0.08
 script/script = ExtResource( 1 )
+bulletScene = null
+
+[node name="rightShot" type="Position2D" parent="."]
+
+transform/pos = Vector2( 35.6739, -7.62939e-06 )
+transform/rot = -0.131389
+
+[node name="leftShot" type="Position2D" parent="."]
+
+transform/pos = Vector2( -33.5564, -0.174831 )
+transform/rot = -0.131389
 
 [node name="animation" type="AnimatedSprite" parent="."]
 
 frames = SubResource( 8 )
-animation = "jump"
-frame = 2
-playing = true
+animation = "walking"
+frame = 1
+__meta__ = {
+"_edit_lock_": true
+}
 
 [node name="jumpcast" type="RayCast2D" parent="."]
 
@@ -118,6 +131,9 @@ enabled = true
 cast_to = Vector2( 0, 80 )
 layer_mask = 1
 type_mask = 15
+__meta__ = {
+"_edit_lock_": true
+}
 
 [node name="groundcheck" type="RayCast2D" parent="."]
 
@@ -125,13 +141,20 @@ enabled = true
 cast_to = Vector2( 0, 200 )
 layer_mask = 1
 type_mask = 15
+__meta__ = {
+"_edit_lock_": true
+}
 
 [node name="CollisionPolygon2D" type="CollisionPolygon2D" parent="."]
 
+visibility/visible = false
 build_mode = 0
-polygon = Vector2Array( -20.5004, 61.9507, -3.85244, 61.7128, 22.3086, 61.9507, 24.6869, 55.0537, 25.1625, 45.5406, 16.6007, 24.3739, 16.1251, -0.360161, 25.1625, -22.9538, 24.9247, -35.5586, 28.1477, -38.3267, 29.028, -48.0095, 21.9859, -57.6923, 11.863, -57.6923, 8.34193, -63.8541, -4.86189, -64.2942, -11.4638, -57.6923, -21.5868, -54.6114, -26.4282, -48.0095, -26.8683, -39.207, -21.1466, -18.0808, -14.5447, 5.6861, -16.3052, 31.6536, -22.0269, 45.2976 )
+polygon = Vector2Array( -17.1083, 61.8561, -3.85244, 61.7128, 21.1961, 61.7137, 22.7624, 54.7364, 22.9048, 45.4807, 16.6007, 24.3739, 16.1251, -0.360161, 22.57, -22.6952, 22.1428, -36.2227, 22.4276, -40.2098, 22.9972, -49.0383, 21.9859, -57.6923, 11.863, -57.6923, 8.34193, -63.8541, -4.86189, -64.2942, -11.4638, -57.6923, -21.4966, -57.1392, -21.8511, -48.644, -20.977, -40.0776, -18.8791, -18.3994, -14.5447, 5.6861, -16.3052, 31.6536, -19.1018, 45.0535 )
 shape_range = Vector2( 0, 6 )
 trigger = false
+__meta__ = {
+"_edit_lock_": true
+}
 
 [node name="Right" type="RayCast2D" parent="."]
 
@@ -140,6 +163,9 @@ enabled = true
 cast_to = Vector2( 0, 60 )
 layer_mask = 1
 type_mask = 15
+__meta__ = {
+"_edit_lock_": true
+}
 
 [node name="Left" type="RayCast2D" parent="."]
 
@@ -148,5 +174,8 @@ enabled = true
 cast_to = Vector2( 0, 60 )
 layer_mask = 1
 type_mask = 15
+__meta__ = {
+"_edit_lock_": true
+}
 
 
