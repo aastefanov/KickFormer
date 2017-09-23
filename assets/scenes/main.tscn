@@ -65,7 +65,7 @@ __meta__ = {
 
 [node name="player" parent="." instance=ExtResource( 5 )]
 
-transform/pos = Vector2( 901.581, 237.145 )
+transform/pos = Vector2( 479.252, 853.417 )
 bulletScene = ExtResource( 6 )
 
 [node name="music" type="SamplePlayer" parent="."]

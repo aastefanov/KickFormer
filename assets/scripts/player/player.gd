@@ -4,10 +4,12 @@ const GRAVITY = 1000.0
 const WALK_SPEED = 320
 const jump_strenght = 650
 const JUMP_DELAY = 0.35
+const SHOOT_DELAY = 0.1
 
 var velocity = Vector2()
 var jumps = 0
 
+var lastShot = 0
 
 var walking = false
 var jumping = false 
@@ -23,30 +25,32 @@ onready var leftRaycast = get_node("Left")
 onready var database = get_parent().get_node("Database")
 onready var leftShot = get_node("leftShot")
 onready var rightShot = get_node("rightShot")
-onready var testLabel = get_parent().get_node("Test")
 
 export (PackedScene) var bulletScene = null
 
 func shoot():
 	var shootingPoint
-	if (direction):
+	if direction:
 		shootingPoint = leftShot.get_global_pos()
 	else:
 		shootingPoint = rightShot.get_global_pos()
 	var bullet = bulletScene.instance()
-	var shootAngle = findAngle(get_pos(),get_global_mouse_pos())
+	var shootAngle = findAngle(shootingPoint,get_global_mouse_pos())
 	shootAngle -= 90
 	if shootAngle < 0:
 		shootAngle = 360 + shootAngle
 		
-	#print(cos(90), sin(deg2rad(180)))
+	
 	bullet.shoot(shootingPoint,shootAngle)
 	get_parent().add_child(bullet)
 
 func _fixed_process(delta):
-	#testLabel.set_text(str(findAngle(get_pos(),get_global_mouse_pos())) + "            " + str(rad2deg(get_pos().angle_to_point(get_global_mouse_pos()))))
-	if (Input.is_action_pressed("shoot")):
+	lastShot -= delta
+	if Input.is_action_pressed("shoot") && lastShot <= 0:
+		anim.set_flip_h(get_global_mouse_pos() < get_pos())
+		direction = get_global_mouse_pos() < get_pos() 
 		shoot()
+		lastShot = SHOOT_DELAY
 	movement(delta)
 
 
@@ -54,32 +58,32 @@ func movement(var delta):
 	velocity.y += delta * GRAVITY
 
 	timesincelastjump += delta
-	if (Input.is_action_pressed("ui_left")):
+	if Input.is_action_pressed("ui_left"):
 		velocity.x = -WALK_SPEED
 		direction = true 
 		anim.set_flip_h(direction)
 		walking = true
-	elif (Input.is_action_pressed("ui_right")):
+	elif Input.is_action_pressed("ui_right"):
 		velocity.x =  WALK_SPEED
 		direction = false
 		anim.set_flip_h(direction)
 		walking = true
 	else:
 		walking = false
-		if (anim.get_animation() == "walking"):
+		if anim.get_animation() == "walking":
 			anim.play("idle")
 		velocity.x = 0
-	if (Input.is_action_pressed("ui_up") && jumps < 2 && timesincelastjump > JUMP_DELAY):
+	if Input.is_action_pressed("ui_up") && jumps < 2 && timesincelastjump > JUMP_DELAY:
 		timesincelastjump = 0
 		jumping = true
 		anim.play("jump")
 		anim.set_frame(0)
-		if (jumps == 0):
-			if (groundcheck.get_collider() != null):
+		if jumps == 0:
+			if groundcheck.get_collider() != null:
 				var lenght = groundcheck.get_collider().get_node("Sprite").get_texture().get_size().x * groundcheck.get_collider().get_scale().x
 				var startpos = groundcheck.get_collider().get_global_pos().x - lenght / 2	
 				var collisionpoint 
-				if (get_global_pos().x < groundcheck.get_collider().get_global_pos().x):
+				if get_global_pos().x < groundcheck.get_collider().get_global_pos().x:
 					
 					collisionpoint = rightRaycast.get_collision_point().x
 				else:
@@ -89,15 +93,15 @@ func movement(var delta):
 				modify_jump_value(percent)
 		jumps += 1
 		velocity.y = -jump_strenght
-	if (walking && !jumping):
+	if walking && !jumping:
 		anim.play("walking")
-	if (!walking && !jumping):
+	if !walking && !jumping:
 		anim.play("idle")
 	var motion = velocity * delta
 	
 	move(motion)
-	if (is_colliding()):
-		if (jumpcast.is_colliding()):	
+	if is_colliding():
+		if jumpcast.is_colliding():	
 			jumps = 0
 		jumping = false
 		var n = get_collision_normal()

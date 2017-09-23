@@ -6,13 +6,13 @@
 [sub_resource type="RectangleShape2D" id=1]
 
 custom_solver_bias = 0.0
-extents = Vector2( 5.16722, 1.91571 )
+extents = Vector2( 4.99021, 1.7556 )
 
 [node name="KinematicBody2D" type="KinematicBody2D"]
 
 input/pickable = false
 shapes/0/shape = SubResource( 1 )
-shapes/0/transform = Matrix32( 1, 0, 0, 1, 0, 0 )
+shapes/0/transform = Matrix32( 1, 0, 0, 1, -0.0395536, 0.00988817 )
 shapes/0/trigger = false
 collision/layers = 1
 collision/mask = 1
@@ -27,7 +27,7 @@ texture = ExtResource( 2 )
 
 [node name="CollisionShape2D" type="CollisionShape2D" parent="."]
 
-visibility/visible = false
+transform/pos = Vector2( -0.0395536, 0.00988817 )
 shape = SubResource( 1 )
 trigger = false
 _update_shape_index = 0
