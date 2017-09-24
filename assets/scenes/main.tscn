@@ -1,15 +1,14 @@
-[gd_scene load_steps=13 format=1]
+[gd_scene load_steps=12 format=1]
 
 [ext_resource path="res://assets/scripts/main.gd" type="Script" id=1]
-[ext_resource path="res://assets/scenes/enviorment/BasicPlatform.tscn" type="PackedScene" id=2]
-[ext_resource path="res://assets/scenes/enviorment/basiclevel.tscn" type="PackedScene" id=3]
-[ext_resource path="res://assets/scripts/database/database.gd" type="Script" id=4]
-[ext_resource path="res://assets/sprites/enviorment/desert.tex" type="Texture" id=5]
-[ext_resource path="res://assets/scenes/charachters/player.tscn" type="PackedScene" id=6]
-[ext_resource path="res://assets/scenes/enviorment/bullet.tscn" type="PackedScene" id=7]
-[ext_resource path="res://assets/music/soundtrack/KickFormer Soundtrack - Hard.smp" type="Sample" id=8]
-[ext_resource path="res://assets/scripts/enviorment/cameracontroller.gd" type="Script" id=9]
-[ext_resource path="res://assets/fonts/60px.fnt" type="BitmapFont" id=10]
+[ext_resource path="res://assets/scenes/enviorment/basiclevel.tscn" type="PackedScene" id=2]
+[ext_resource path="res://assets/scripts/database/database.gd" type="Script" id=3]
+[ext_resource path="res://assets/sprites/enviorment/desert.tex" type="Texture" id=4]
+[ext_resource path="res://assets/scenes/charachters/player.tscn" type="PackedScene" id=5]
+[ext_resource path="res://assets/scenes/enviorment/bullet.tscn" type="PackedScene" id=6]
+[ext_resource path="res://assets/music/soundtrack/KickFormer Soundtrack - Hard.smp" type="Sample" id=7]
+[ext_resource path="res://assets/scripts/enviorment/cameracontroller.gd" type="Script" id=8]
+[ext_resource path="res://assets/fonts/60px.fnt" type="BitmapFont" id=9]
 
 [sub_resource type="SampleLibrary" id=1]
 
@@ -17,7 +16,7 @@ samples/hard = {
 "db": 0.0,
 "pitch": 1.0,
 "priority": 0,
-"sample": ExtResource( 8 )
+"sample": ExtResource( 7 )
 }
 
 [sub_resource type="RectangleShape2D" id=2]
@@ -28,12 +27,11 @@ extents = Vector2( 50.5396, 557.376 )
 [node name="game" type="Node2D"]
 
 script/script = ExtResource( 1 )
-platform = ExtResource( 2 )
-levelScene = ExtResource( 3 )
+levelScene = ExtResource( 2 )
 
 [node name="Database" type="Node" parent="."]
 
-script/script = ExtResource( 4 )
+script/script = ExtResource( 3 )
 
 [node name="ParallaxLayer" type="ParallaxLayer" parent="."]
 
@@ -59,15 +57,15 @@ scroll/ignore_camera_zoom = false
 
 transform/pos = Vector2( 960.018, 540.035 )
 z/z = -1
-texture = ExtResource( 5 )
+texture = ExtResource( 4 )
 __meta__ = {
 "_edit_lock_": true
 }
 
-[node name="player" parent="." instance=ExtResource( 6 )]
+[node name="player" parent="." instance=ExtResource( 5 )]
 
 transform/pos = Vector2( 479.252, 853.417 )
-bulletScene = ExtResource( 7 )
+bulletScene = ExtResource( 6 )
 
 [node name="music" type="SamplePlayer" parent="."]
 
@@ -104,11 +102,11 @@ drag_margin/left = 0.2
 drag_margin/top = 0.2
 drag_margin/right = 0.2
 drag_margin/bottom = 0.2
-script/script = ExtResource( 9 )
+script/script = ExtResource( 8 )
 
 [node name="stages" type="Node2D" parent="."]
 
-[node name="level0" parent="stages" instance=ExtResource( 3 )]
+[node name="level0" parent="stages" instance=ExtResource( 2 )]
 
 [node name="finishPoint" type="Area2D" parent="."]
 
@@ -145,7 +143,7 @@ margin/left = 13.0
 margin/top = 14.0
 margin/right = 96.0
 margin/bottom = 74.0
-custom_fonts/font = ExtResource( 10 )
+custom_fonts/font = ExtResource( 9 )
 custom_colors/font_color = Color( 0.460938, 0.291687, 0.291687, 1 )
 percent_visible = 1.0
 lines_skipped = 0
