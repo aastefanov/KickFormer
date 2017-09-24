@@ -5,7 +5,7 @@ var time = 0
 var current_pos = 0
 
 func _ready():
-	set_zoom(get_node("/root/globals").ratio)
+	set_zoom(Vector2(1,1) / get_node("/root/globals").ratio)
 	set_fixed_process(false)
 
 
