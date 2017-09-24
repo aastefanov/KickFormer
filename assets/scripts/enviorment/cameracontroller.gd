@@ -16,7 +16,7 @@ func _on_finishPoint_body_enter( body ):
 		get_node("/root/globals").currentLevel += 1
 		goal = get_parent().get_node("stages/level" + str(get_node("/root/globals").currentLevel) + "/Position2D").get_global_pos().x
 		#goal += 190
-		get_parent().get_node("finishPoint").translate(Vector2(get_tree().get_root().get_rect().size.x, 0))
+		get_parent().get_node("finishPoint").translate(Vector2(get_tree().get_root().get_rect().size.x, 0) * (Vector2(1, 1) / get_node("/root/globals").ratio))
 		set_fixed_process(true)
 
 func _fixed_process(delta):

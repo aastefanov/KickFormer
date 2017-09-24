@@ -28,5 +28,5 @@ func _fixed_process(delta):
 func generateNextLevel():
 	var level = levelScene.instance()
 	level.set_name("level" + str(get_node("/root/globals").currentLevel + 1))
-	level.set_pos(Vector2((get_node("/root/globals").currentLevel + 1) * get_tree().get_root().get_rect().size.x, 0))
+	level.set_pos(Vector2((get_node("/root/globals").currentLevel + 1) * (get_tree().get_root().get_rect().size.x * (1 / get_node("/root/globals").ratio.x)), 0))
 	get_node("stages").add_child(level)
