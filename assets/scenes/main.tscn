@@ -1,55 +1,156 @@
-[gd_scene load_steps=7 format=1]
+[gd_scene load_steps=13 format=1]
 
 [ext_resource path="res://assets/scripts/main.gd" type="Script" id=1]
 [ext_resource path="res://assets/scenes/enviorment/BasicPlatform.tscn" type="PackedScene" id=2]
-[ext_resource path="res://assets/scripts/database/database.gd" type="Script" id=3]
-[ext_resource path="res://assets/sprites/ground/Locomotive.png" type="Texture" id=4]
-[ext_resource path="res://assets/scenes/charachters/player.tscn" type="PackedScene" id=5]
+[ext_resource path="res://assets/scenes/enviorment/basiclevel.tscn" type="PackedScene" id=3]
+[ext_resource path="res://assets/scripts/database/database.gd" type="Script" id=4]
+[ext_resource path="res://assets/sprites/enviorment/desert.tex" type="Texture" id=5]
+[ext_resource path="res://assets/scenes/charachters/player.tscn" type="PackedScene" id=6]
+[ext_resource path="res://assets/scenes/enviorment/bullet.tscn" type="PackedScene" id=7]
+[ext_resource path="res://assets/music/soundtrack/KickFormer Soundtrack - Hard.smp" type="Sample" id=8]
+[ext_resource path="res://assets/scripts/enviorment/cameracontroller.gd" type="Script" id=9]
+[ext_resource path="res://assets/fonts/60px.fnt" type="BitmapFont" id=10]
 
-[sub_resource type="RectangleShape2D" id=1]
+[sub_resource type="SampleLibrary" id=1]
+
+samples/hard = {
+"db": 0.0,
+"pitch": 1.0,
+"priority": 0,
+"sample": ExtResource( 8 )
+}
+
+[sub_resource type="RectangleShape2D" id=2]
 
 custom_solver_bias = 0.0
-extents = Vector2( 533.016, 35.3611 )
+extents = Vector2( 50.5396, 557.376 )
 
-[node name="Node2D" type="Node2D"]
+[node name="game" type="Node2D"]
 
 script/script = ExtResource( 1 )
 platform = ExtResource( 2 )
+levelScene = ExtResource( 3 )
 
 [node name="Database" type="Node" parent="."]
 
-script/script = ExtResource( 3 )
+script/script = ExtResource( 4 )
 
-[node name="Platform" type="StaticBody2D" parent="."]
+[node name="ParallaxLayer" type="ParallaxLayer" parent="."]
 
-transform/pos = Vector2( 514.172, 570.371 )
-input/pickable = false
-shapes/0/shape = SubResource( 1 )
-shapes/0/transform = Matrix32( 1, 0, 0, 1, 0, 0 )
-shapes/0/trigger = false
-collision/layers = 1
-collision/mask = 1
-constant_linear_velocity = Vector2( 0, 0 )
-constant_angular_velocity = 0.0
-friction = 1.0
-bounce = 0.0
+transform/pos = Vector2( 960.018, 540.035 )
+motion/scale = Vector2( 1, 1 )
+motion/offset = Vector2( 0, 0 )
+motion/mirroring = Vector2( 1920, 0 )
+
+[node name="ParallaxBackground" type="ParallaxBackground" parent="ParallaxLayer"]
+
+layer = -1
+offset = Vector2( 0, 0 )
+rotation = 0.0
+scale = Vector2( 1, 1 )
+scroll/offset = Vector2( 0, 0 )
+scroll/base_offset = Vector2( 0, 0 )
+scroll/base_scale = Vector2( 1, 1 )
+scroll/limit_begin = Vector2( 0, 0 )
+scroll/limit_end = Vector2( 0, 0 )
+scroll/ignore_camera_zoom = false
+
+[node name="mainBackground" type="Sprite" parent="ParallaxLayer/ParallaxBackground"]
+
+transform/pos = Vector2( 960.018, 540.035 )
+z/z = -1
+texture = ExtResource( 5 )
 __meta__ = {
-"_edit_group_": true
+"_edit_lock_": true
 }
 
-[node name="CollisionShape2D" type="CollisionShape2D" parent="Platform"]
+[node name="player" parent="." instance=ExtResource( 6 )]
 
-shape = SubResource( 1 )
-trigger = false
+transform/pos = Vector2( 479.252, 853.417 )
+bulletScene = ExtResource( 7 )
+
+[node name="music" type="SamplePlayer" parent="."]
+
+config/polyphony = 1
+config/samples = SubResource( 1 )
+default/volume_db = 0.0
+default/pitch_scale = 1.0
+default/pan = 0.0
+default/depth = 0.0
+default/height = 0.0
+default/filter/type = 0
+default/filter/cutoff = 5000.0
+default/filter/resonance = 1.0
+default/filter/gain = 1.0
+default/reverb_room = 2
+default/reverb_send = 0.0
+default/chorus_send = 0.0
+
+[node name="mainCamera" type="Camera2D" parent="."]
+
+anchor_mode = 0
+rotating = false
+current = true
+zoom = Vector2( 1, 1 )
+limit/left = -10000000
+limit/top = -10000000
+limit/right = 10000000
+limit/bottom = 10000000
+drag_margin/h_enabled = true
+drag_margin/v_enabled = true
+smoothing/enable = true
+smoothing/speed = 5.0
+drag_margin/left = 0.2
+drag_margin/top = 0.2
+drag_margin/right = 0.2
+drag_margin/bottom = 0.2
+script/script = ExtResource( 9 )
+
+[node name="stages" type="Node2D" parent="."]
+
+[node name="level0" parent="stages" instance=ExtResource( 3 )]
+
+[node name="finishPoint" type="Area2D" parent="."]
+
+input/pickable = true
+shapes/0/shape = SubResource( 2 )
+shapes/0/transform = Matrix32( 1, 0, 0, 1, 1985.27, 561.969 )
+shapes/0/trigger = true
+gravity_vec = Vector2( 0, 1 )
+gravity = 98.0
+linear_damp = 0.1
+angular_damp = 1.0
+
+[node name="CollisionShape2D" type="CollisionShape2D" parent="finishPoint"]
+
+transform/pos = Vector2( 1985.27, 561.969 )
+shape = SubResource( 2 )
+trigger = true
 _update_shape_index = 0
 
-[node name="Sprite" type="Sprite" parent="Platform"]
+[node name="CanvasLayer" type="CanvasLayer" parent="."]
 
-transform/scale = Vector2( 5.31226, 1 )
-texture = ExtResource( 4 )
+layer = 1
+offset = Vector2( 0, 0 )
+rotation = 0.0
+scale = Vector2( 1, 1 )
 
-[node name="KinematicBody2D" parent="." instance=ExtResource( 5 )]
+[node name="Score" type="Label" parent="CanvasLayer"]
 
-transform/pos = Vector2( 386.346, 334.652 )
+focus/ignore_mouse = true
+focus/stop_mouse = true
+size_flags/horizontal = 2
+size_flags/vertical = 0
+margin/left = 13.0
+margin/top = 14.0
+margin/right = 96.0
+margin/bottom = 74.0
+custom_fonts/font = ExtResource( 10 )
+custom_colors/font_color = Color( 0.460938, 0.291687, 0.291687, 1 )
+percent_visible = 1.0
+lines_skipped = 0
+max_lines_visible = -1
+
+[connection signal="body_enter" from="finishPoint" to="mainCamera" method="_on_finishPoint_body_enter"]
 
 

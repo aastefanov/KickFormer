@@ -1,29 +1,34 @@
 extends Node2D
 
 export (PackedScene) var platform = null
+export (PackedScene) var levelScene = null
 var spawnTime = 0;
+const spawncount = 1
+onready var database = get_node("Database")
+var player_id
 
 func _ready():
-	platformSpawner()
+	randomize()
+	database.register("Nikolay")
+	database.seed_stats()
+	player_id = database.get_player_by_name("Nikolay")
+	database.set_high_score(0, player_id)
+	get_node("music").play("hard")
 	set_fixed_process(true)
-	#spawnPlatform(Vector2(get_viewport().get_rect().size.x,get_viewport().get_rect().size.y/2))
+	
 	
 func _fixed_process(delta):
-	#if (spawnTime >= 3):
-	#	 platformSpawner()
-	#	 spawnTime = 0
+
+	get_node("CanvasLayer/Score").set_text(str(get_node("/root/globals").currentLevel + 1))
+	if (spawnTime >= 2):
+		 #platformSpawner()
+		 spawnTime = 0
 	if (Input.is_action_pressed("exit")):
 		get_tree().quit()
-	#spawnTime += delta;
+	spawnTime += delta;
 
-
-func spawnPlatform(var pos):
-	var spawnedPlatform = platform.instance()
-	spawnedPlatform.set_pos(pos)
-	add_child(spawnedPlatform)
-
-	
-func platformSpawner():
-	spawnPlatform(Vector2(get_viewport().get_rect().size.x, get_viewport().get_rect().size.y/2))
-
-	
+func generateNextLevel():
+	var level = levelScene.instance()
+	level.set_name("level" + str(get_node("/root/globals").currentLevel + 1))
+	level.set_pos(Vector2((get_node("/root/globals").currentLevel + 1) * get_tree().get_root().get_rect().size.x, 0))
+	get_node("stages").add_child(level)

@@ -1,12 +1,78 @@
-[gd_scene load_steps=4 format=1]
+[gd_scene load_steps=28 format=1]
 
 [ext_resource path="res://assets/scripts/player/player.gd" type="Script" id=1]
-[ext_resource path="res://assets/sprites/ground/Locomotive.png" type="Texture" id=2]
+[ext_resource path="res://assets/sprites/player/idle/sprite_00.tex" type="Texture" id=2]
+[ext_resource path="res://assets/sprites/player/idle/sprite_01.tex" type="Texture" id=3]
+[ext_resource path="res://assets/sprites/player/idle/sprite_02.tex" type="Texture" id=4]
+[ext_resource path="res://assets/sprites/player/idle/sprite_03.tex" type="Texture" id=5]
+[ext_resource path="res://assets/sprites/player/idle/sprite_04.tex" type="Texture" id=6]
+[ext_resource path="res://assets/sprites/player/idle/sprite_05.tex" type="Texture" id=7]
+[ext_resource path="res://assets/sprites/player/idle/sprite_06.tex" type="Texture" id=8]
+[ext_resource path="res://assets/sprites/player/idle/sprite_07.tex" type="Texture" id=9]
+[ext_resource path="res://assets/sprites/player/idle/sprite_08.tex" type="Texture" id=10]
+[ext_resource path="res://assets/sprites/player/idle/sprite_10.tex" type="Texture" id=11]
+[ext_resource path="res://assets/sprites/player/idle/sprite_09.tex" type="Texture" id=12]
+[ext_resource path="res://assets/sprites/player/idle/sprite_11.tex" type="Texture" id=13]
+[ext_resource path="res://assets/sprites/player/walking/sprite_0.tex" type="Texture" id=14]
+[ext_resource path="res://assets/sprites/player/walking/sprite_1.tex" type="Texture" id=15]
+[ext_resource path="res://assets/sprites/player/walking/sprite_2.tex" type="Texture" id=16]
+[ext_resource path="res://assets/sprites/player/jump/sprite_0.tex" type="Texture" id=17]
+[ext_resource path="res://assets/sprites/player/jump/sprite_1.tex" type="Texture" id=18]
+[ext_resource path="res://assets/sprites/player/jump/sprite_2.tex" type="Texture" id=19]
 
-[sub_resource type="RectangleShape2D" id=1]
+[sub_resource type="ConvexPolygonShape2D" id=1]
 
 custom_solver_bias = 0.0
-extents = Vector2( 10, 34.8869 )
+points = Vector2Array( -20.977, -40.0776, -21.8511, -48.644, -21.4966, -57.1392, -11.4638, -57.6923, 11.863, -57.6923, 22.9972, -49.0383, 22.4276, -40.2098, 22.1428, -36.2227 )
+
+[sub_resource type="ConvexPolygonShape2D" id=2]
+
+custom_solver_bias = 0.0
+points = Vector2Array( 16.6007, 24.3739, 22.9048, 45.4807, 22.7624, 54.7364, -3.85244, 61.7128, -17.1083, 61.8561, -19.1018, 45.0535, -16.3052, 31.6536 )
+
+[sub_resource type="ConvexPolygonShape2D" id=3]
+
+custom_solver_bias = 0.0
+points = Vector2Array( 11.863, -57.6923, 21.9859, -57.6923, 22.9972, -49.0383 )
+
+[sub_resource type="ConvexPolygonShape2D" id=4]
+
+custom_solver_bias = 0.0
+points = Vector2Array( 22.7624, 54.7364, 21.1961, 61.7137, -3.85244, 61.7128 )
+
+[sub_resource type="ConvexPolygonShape2D" id=5]
+
+custom_solver_bias = 0.0
+points = Vector2Array( 16.6007, 24.3739, -16.3052, 31.6536, -14.5447, 5.6861, 16.1251, -0.360161 )
+
+[sub_resource type="ConvexPolygonShape2D" id=6]
+
+custom_solver_bias = 0.0
+points = Vector2Array( 22.57, -22.6952, 16.1251, -0.360161, -14.5447, 5.6861, -18.8791, -18.3994, -20.977, -40.0776, 22.1428, -36.2227 )
+
+[sub_resource type="ConvexPolygonShape2D" id=7]
+
+custom_solver_bias = 0.0
+points = Vector2Array( 11.863, -57.6923, -11.4638, -57.6923, -4.86189, -64.2942, 8.34193, -63.8541 )
+
+[sub_resource type="SpriteFrames" id=8]
+
+animations = [ {
+"frames": [ ExtResource( 2 ), ExtResource( 3 ), ExtResource( 4 ), ExtResource( 5 ), ExtResource( 6 ), ExtResource( 7 ), ExtResource( 8 ), ExtResource( 9 ), ExtResource( 10 ), ExtResource( 11 ), ExtResource( 12 ), ExtResource( 13 ) ],
+"loop": true,
+"name": "idle",
+"speed": 12.0
+}, {
+"frames": [ ExtResource( 14 ), ExtResource( 15 ), ExtResource( 16 ) ],
+"loop": true,
+"name": "walking",
+"speed": 10.0
+}, {
+"frames": [ ExtResource( 17 ), ExtResource( 18 ), ExtResource( 19 ) ],
+"loop": false,
+"name": "jump",
+"speed": 7.0
+} ]
 
 [node name="player" type="KinematicBody2D" groups=[
 "player",
@@ -16,27 +82,100 @@ input/pickable = false
 shapes/0/shape = SubResource( 1 )
 shapes/0/transform = Matrix32( 1, 0, 0, 1, 0, 0 )
 shapes/0/trigger = false
+shapes/1/shape = SubResource( 2 )
+shapes/1/transform = Matrix32( 1, 0, 0, 1, 0, 0 )
+shapes/1/trigger = false
+shapes/2/shape = SubResource( 3 )
+shapes/2/transform = Matrix32( 1, 0, 0, 1, 0, 0 )
+shapes/2/trigger = false
+shapes/3/shape = SubResource( 4 )
+shapes/3/transform = Matrix32( 1, 0, 0, 1, 0, 0 )
+shapes/3/trigger = false
+shapes/4/shape = SubResource( 5 )
+shapes/4/transform = Matrix32( 1, 0, 0, 1, 0, 0 )
+shapes/4/trigger = false
+shapes/5/shape = SubResource( 6 )
+shapes/5/transform = Matrix32( 1, 0, 0, 1, 0, 0 )
+shapes/5/trigger = false
+shapes/6/shape = SubResource( 7 )
+shapes/6/transform = Matrix32( 1, 0, 0, 1, 0, 0 )
+shapes/6/trigger = false
 collision/layers = 2
 collision/mask = 1
 collision/margin = 0.08
 script/script = ExtResource( 1 )
+bulletScene = null
 
-[node name="Sprite" type="Sprite" parent="."]
+[node name="rightShot" type="Position2D" parent="."]
 
-transform/scale = Vector2( 0.1, 1 )
-texture = ExtResource( 2 )
+transform/pos = Vector2( 35.6739, -7.62939e-06 )
+transform/rot = -0.131389
 
-[node name="CollisionShape2D" type="CollisionShape2D" parent="."]
+[node name="leftShot" type="Position2D" parent="."]
 
-shape = SubResource( 1 )
-trigger = false
-_update_shape_index = 0
+transform/pos = Vector2( -33.5564, -0.174831 )
+transform/rot = -0.131389
 
-[node name="RayCast2D" type="RayCast2D" parent="."]
+[node name="animation" type="AnimatedSprite" parent="."]
+
+frames = SubResource( 8 )
+animation = "walking"
+frame = 1
+__meta__ = {
+"_edit_lock_": true
+}
+
+[node name="jumpcast" type="RayCast2D" parent="."]
 
 enabled = true
-cast_to = Vector2( 0, 35 )
+cast_to = Vector2( 0, 80 )
 layer_mask = 1
 type_mask = 15
+__meta__ = {
+"_edit_lock_": true
+}
+
+[node name="groundcheck" type="RayCast2D" parent="."]
+
+enabled = true
+cast_to = Vector2( 0, 200 )
+layer_mask = 1
+type_mask = 15
+__meta__ = {
+"_edit_lock_": true
+}
+
+[node name="CollisionPolygon2D" type="CollisionPolygon2D" parent="."]
+
+visibility/visible = false
+build_mode = 0
+polygon = Vector2Array( -17.1083, 61.8561, -3.85244, 61.7128, 21.1961, 61.7137, 22.7624, 54.7364, 22.9048, 45.4807, 16.6007, 24.3739, 16.1251, -0.360161, 22.57, -22.6952, 22.1428, -36.2227, 22.4276, -40.2098, 22.9972, -49.0383, 21.9859, -57.6923, 11.863, -57.6923, 8.34193, -63.8541, -4.86189, -64.2942, -11.4638, -57.6923, -21.4966, -57.1392, -21.8511, -48.644, -20.977, -40.0776, -18.8791, -18.3994, -14.5447, 5.6861, -16.3052, 31.6536, -19.1018, 45.0535 )
+shape_range = Vector2( 0, 6 )
+trigger = false
+__meta__ = {
+"_edit_lock_": true
+}
+
+[node name="Right" type="RayCast2D" parent="."]
+
+transform/pos = Vector2( 26.3432, 12.8156 )
+enabled = true
+cast_to = Vector2( 0, 60 )
+layer_mask = 1
+type_mask = 15
+__meta__ = {
+"_edit_lock_": true
+}
+
+[node name="Left" type="RayCast2D" parent="."]
+
+transform/pos = Vector2( -24.6345, 12.3884 )
+enabled = true
+cast_to = Vector2( 0, 60 )
+layer_mask = 1
+type_mask = 15
+__meta__ = {
+"_edit_lock_": true
+}
 
 

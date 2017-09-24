@@ -1,0 +1,91 @@
+[gd_scene load_steps=9 format=1]
+
+[ext_resource path="res://assets/scripts/main.gd" type="Script" id=1]
+[ext_resource path="res://assets/scenes/enviorment/BasicPlatform.tscn" type="PackedScene" id=2]
+[ext_resource path="res://assets/scripts/database/database.gd" type="Script" id=3]
+[ext_resource path="res://assets/scenes/charachters/player.tscn" type="PackedScene" id=4]
+[ext_resource path="res://assets/sprites/enviorment/desert.tex" type="Texture" id=5]
+[ext_resource path="res://assets/fonts/60px.fnt" type="BitmapFont" id=6]
+[ext_resource path="res://assets/music/soundtrack/KickFormer Soundtrack - Hard.smp" type="Sample" id=7]
+
+[sub_resource type="SampleLibrary" id=1]
+
+samples/hard = {
+"db": 0.0,
+"pitch": 1.0,
+"priority": 0,
+"sample": ExtResource( 7 )
+}
+
+[node name="Node2D" type="Node2D"]
+
+script/script = ExtResource( 1 )
+platform = ExtResource( 2 )
+
+[node name="Database" type="Node" parent="."]
+
+script/script = ExtResource( 3 )
+
+[node name="player" parent="." instance=ExtResource( 4 )]
+
+transform/pos = Vector2( 901.581, 237.145 )
+
+[node name="BasicPlatform" parent="." instance=ExtResource( 2 )]
+
+transform/pos = Vector2( 949.367, 363.212 )
+
+[node name="Background" type="Sprite" parent="."]
+
+<<<<<<< HEAD
+transform/pos = Vector2( 959.847, 540.339 )
+z/z = -1
+texture = ExtResource( 5 )
+__meta__ = {
+"_edit_lock_": true
+}
+
+[node name="CanvasLayer" type="CanvasLayer" parent="."]
+
+layer = 1
+offset = Vector2( 0, 0 )
+rotation = 0.0
+scale = Vector2( 1, 1 )
+
+[node name="Label" type="Label" parent="CanvasLayer"]
+
+focus/ignore_mouse = true
+focus/stop_mouse = true
+size_flags/horizontal = 2
+size_flags/vertical = 0
+margin/left = 30.0
+margin/top = 23.0
+margin/right = 118.0
+margin/bottom = 83.0
+custom_fonts/font = ExtResource( 6 )
+custom_colors/font_color = Color( 0.375, 0.18457, 0.0703125, 1 )
+custom_colors/font_color_shadow = Color( 0.351563, 0.138702, 0.138702, 1 )
+text = "Text"
+percent_visible = 1.0
+lines_skipped = 0
+max_lines_visible = -1
+
+[node name="StreamPlayer" type="SamplePlayer" parent="."]
+
+config/polyphony = 1
+config/samples = SubResource( 1 )
+default/volume_db = 0.0
+default/pitch_scale = 1.0
+default/pan = 0.0
+default/depth = 0.0
+default/height = 0.0
+default/filter/type = 0
+default/filter/cutoff = 5000.0
+default/filter/resonance = 1.0
+default/filter/gain = 1.0
+default/reverb_room = 2
+default/reverb_send = 0.0
+default/chorus_send = 0.0
+
+=======
+>>>>>>> master
+
