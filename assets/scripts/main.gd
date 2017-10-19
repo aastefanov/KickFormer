@@ -14,7 +14,7 @@ func _ready():
 	database.seed_stats()
 	player_id = database.get_player_by_name("Nikolay")
 	database.set_high_score(0, player_id)
-	#get_node("music").play("hard")
+	#get_node("music").play("soft")
 	set_fixed_process(true)
 	
 	

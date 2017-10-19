@@ -19,39 +19,85 @@ var direction = false
 
 onready var jumpcast = get_node("jumpcast")
 onready var groundcheck = get_node("groundcheck")
-onready var anim = get_node("animation")
+onready var anim = get_node("body/animation")
 onready var rightRaycast = get_node("Right")
 onready var leftRaycast = get_node("Left")
 onready var database = get_parent().get_node("Database")
 onready var leftShot = get_node("leftShot")
 onready var rightShot = get_node("rightShot")
+onready var leftArm = get_node("body/arm-left")
+onready var rightArm = get_node("body/arm-right")
 
 export (PackedScene) var bulletScene = null
 
+var currentArm
+var armAngle = 0
+
+
 func shoot():
-	var shootingPoint
-	if direction:
-		shootingPoint = leftShot.get_global_pos()
-	else:
-		shootingPoint = rightShot.get_global_pos()
+	direction = get_global_mouse_pos() < get_pos() 
+	moveArm()
+	armAngle = findAngle(currentArm.get_node("shoulder").get_global_pos(),get_global_mouse_pos())
+	armAngle -= 180
+	if armAngle < 0:
+		armAngle = 360 + armAngle 
+	if !direction:
+		armAngle = clamp(armAngle, 225, 315) 
+	else: 
+		armAngle = clamp(armAngle, 45, 135) 
+	
+	armAngle = deg2rad(-armAngle)
+
+	currentArm.set_rot(armAngle)
+
+	var shootingPoint = currentArm.get_node("shootingPosition").get_global_pos()
 	var bullet = bulletScene.instance()
-	var shootAngle = findAngle(shootingPoint,get_global_mouse_pos())
-	shootAngle -= 90
+	#var shootAngle = findAngle(shootingPoint,get_global_mouse_pos())
+	var shootAngle = rad2deg(armAngle) - 90
 	if shootAngle < 0:
 		shootAngle = 360 + shootAngle
-		
-	
-	bullet.shoot(shootingPoint,shootAngle)
+#	if direction:
+#		shootAngle = clamp(armAngle, 225, 315) 
+#	else: 
+#		shootAngle = clamp(armAngle, 45, 135) 
+	bullet.shoot(shootingPoint,-shootAngle)
 	get_parent().add_child(bullet)
+
+func _input(event):
+	if event.type == InputEvent.MOUSE_BUTTON:
+		if event.button_index == BUTTON_LEFT && event.pressed && lastShot <= 0:
+			shoot()
+			lastShot = SHOOT_DELAY
 
 func _fixed_process(delta):
 	lastShot -= delta
-	if Input.is_action_pressed("shoot") && lastShot <= 0:
-		anim.set_flip_h(get_global_mouse_pos() < get_pos())
-		direction = get_global_mouse_pos() < get_pos() 
-		shoot()
-		lastShot = SHOOT_DELAY
+	#var oDir = direction
+	#direction = get_global_mouse_pos() < get_pos() 
+	#if oDir != direction:
+		#moveArm()
+	anim.set_flip_h(direction)
+#	if Input.is_action_pressed("shoot") && lastShot <= 0:
+
 	movement(delta)
+	
+
+func moveArm():
+	if direction:
+		leftArm.hide()
+		rightArm.show()
+		currentArm = rightArm
+		armAngle = rad2deg(armAngle)
+		armAngle = 360 - armAngle
+		armAngle = deg2rad(armAngle)
+		get_node("body/arm-right").set_rot(armAngle)
+	else:
+		rightArm.hide()
+		leftArm.show()
+		currentArm = leftArm
+		armAngle = rad2deg(armAngle)
+		armAngle = 360 - armAngle
+		armAngle = deg2rad(armAngle)
+		get_node("body/arm-left").set_rot(armAngle)
 
 
 func movement(var delta):
@@ -60,12 +106,21 @@ func movement(var delta):
 	timesincelastjump += delta
 	if Input.is_action_pressed("ui_left"):
 		velocity.x = -WALK_SPEED
-		direction = true 
+		if (!direction):
+			get_node("body/arm-right").set_rot(armAngle)
+			direction = true 
+			currentArm = leftArm
+			
+			moveArm()
 		anim.set_flip_h(direction)
 		walking = true
 	elif Input.is_action_pressed("ui_right"):
 		velocity.x =  WALK_SPEED
-		direction = false
+		if (direction):
+			get_node("body/arm-right").set_rot(armAngle) 
+			direction = false
+			currentArm = rightArm
+			moveArm()
 		anim.set_flip_h(direction)
 		walking = true
 	else:
@@ -76,26 +131,29 @@ func movement(var delta):
 	if Input.is_action_pressed("ui_up") && jumps < 2 && timesincelastjump > JUMP_DELAY:
 		timesincelastjump = 0
 		jumping = true
-		anim.play("jump")
-		anim.set_frame(0)
+		#anim.play("jump")
+		#anim.set_frame(0)
 		if jumps == 0:
+			anim.set_frame(0)
+			anim.stop()
 			if groundcheck.get_collider() != null:
-				var lenght = groundcheck.get_collider().get_node("Sprite").get_texture().get_size().x * groundcheck.get_collider().get_scale().x
-				var startpos = groundcheck.get_collider().get_global_pos().x - lenght / 2	
-				var collisionpoint 
-				if get_global_pos().x < groundcheck.get_collider().get_global_pos().x:
+				#var lenght = groundcheck.get_collider().get_node("Sprite").get_texture().get_size().x * groundcheck.get_collider().get_scale().x
+				#var startpos = groundcheck.get_collider().get_global_pos().x - lenght / 2	
+				#var collisionpoint 
+				#if get_global_pos().x < groundcheck.get_collider().get_global_pos().x:
 					
-					collisionpoint = rightRaycast.get_collision_point().x
-				else:
-					collisionpoint = leftRaycast.get_collision_point().x
-				var percent = ((collisionpoint - startpos)/lenght) * 100
-				percent = clamp(percent, 1, 100)
-				modify_jump_value(percent)
+				#	collisionpoint = rightRaycast.get_collision_point().x
+				#else:
+				#	collisionpoint = leftRaycast.get_collision_point().x
+				#var percent = ((collisionpoint - startpos)/lenght) * 100
+				#percent = clamp(percent, 1, 100)
+				#modify_jump_value(percent)
+				pass 
 		jumps += 1
 		velocity.y = -jump_strenght
 	if walking && !jumping:
 		anim.play("walking")
-	if !walking && !jumping:
+	if !walking:
 		anim.play("idle")
 	var motion = velocity * delta
 	
@@ -127,4 +185,6 @@ func _ready():
 	jumpcast.add_exception(self)
 	rightRaycast.add_exception(self)
 	leftRaycast.add_exception(self)
+	moveArm()
 	set_fixed_process(true)
+	set_process_input(true)
